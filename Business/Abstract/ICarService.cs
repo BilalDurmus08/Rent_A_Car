@@ -8,8 +8,10 @@ using System.Threading.Tasks;
 
 namespace Business.Abstract
 {
-    public interface ICarService : ICarDal //I made this because in this class
-    {                                     //we need all the method which inside of ICardal interface class  
+    public interface ICarService  
+    {
+        List<Car> GetAll();
+
 
     }
 

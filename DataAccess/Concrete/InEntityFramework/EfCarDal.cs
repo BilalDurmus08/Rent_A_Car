@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Concrete.InEntityFramework
 {
-    internal class EfCarDal : ICarDal
+    public class EfCarDal : ICarDal
     {
         public void Add(Car entity)
         {

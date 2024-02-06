@@ -12,7 +12,7 @@ namespace DataAccess.Concrete.InEntityFramework
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=DESKTOP-SDDC56F\SQLEXPRESS;Database=Rent_A_Car;Trusted_Connection=true");
+            optionsBuilder.UseSqlServer(@"Server=DESKTOP-SDDC56F\SQLEXPRESS;Database=Rent_A_Car;Trusted_Connection=true;Encrypt=false;");
         }
         public DbSet<Brand> Brands { get; set; }
         public DbSet<Car> Cars { get; set; }
@@ -21,4 +21,4 @@ namespace DataAccess.Concrete.InEntityFramework
          
     }
 
-}
+} 
