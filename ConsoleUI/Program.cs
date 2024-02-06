@@ -15,16 +15,45 @@ namespace ConsoleUI
         static void Main(string[] args)
         {
             CarManager carManager = new CarManager(new EfCarDal());
+           
+
             foreach (Car car in carManager.GetAll())
             {
                 Console.WriteLine("Id: " + car.Id +
                                   "\nBrandId: " + car.BrandId +
                                   "\nColorId: " + car.ColorId +
                                   "\nModelYear: " + car.ModelYear +
-                                  "\nDailyPrice: " + car.DailyPrice);
+                                  "\nDailyPrice: " + car.DailyPrice +
+                                  "\nCarName: " + car.CarName);
                 Console.WriteLine("-----------------------------------");
             }
-            //Id, BrandId, ColorId, ModelYear, DailyPrice
+            Console.WriteLine("****************");
+    /*      List<Car> byColor = carManager.GetCarsByColorId(102);
+            foreach (Car car in byColor)
+            {
+                Console.WriteLine("Id: " + car.Id +
+                                "\nBrandId: " + car.BrandId +
+                                "\nColorId: " + car.ColorId +
+                                "\nModelYear: " + car.ModelYear +
+                                "\nDailyPrice: " + car.DailyPrice);
+                Console.WriteLine("-----------------------------------");
+            }
+            List<Car> byBrand = carManager.GetCarsyByBrandId(50);
+            Console.WriteLine("****************");
+            Console.WriteLine("****************");
+            Console.WriteLine("****************");
+            foreach (Car car in byBrand)
+            {
+                Console.WriteLine("Id: " + car.Id +
+                                "\nBrandId: " + car.BrandId +
+                                "\nColorId: " + car.ColorId +
+                                "\nModelYear: " + car.ModelYear +
+                                "\nDailyPrice: " + car.DailyPrice);
+                Console.WriteLine("-----------------------------------");
+            }
+
+
+            */
 
         }
 
