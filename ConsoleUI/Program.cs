@@ -14,8 +14,17 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
+            //GetAllCarsTEST();
+            //GetCarsByIdTEST();
+            //GetCarsByBrandIdTEST();
+
+
+
+        }
+
+        private static void GetAllCarsTEST()
+        {
             CarManager carManager = new CarManager(new EfCarDal());
-           
 
             foreach (Car car in carManager.GetAll())
             {
@@ -27,18 +36,12 @@ namespace ConsoleUI
                                   "\nCarName: " + car.CarName);
                 Console.WriteLine("-----------------------------------");
             }
-            Console.WriteLine("****************");
-    /*      List<Car> byColor = carManager.GetCarsByColorId(102);
-            foreach (Car car in byColor)
-            {
-                Console.WriteLine("Id: " + car.Id +
-                                "\nBrandId: " + car.BrandId +
-                                "\nColorId: " + car.ColorId +
-                                "\nModelYear: " + car.ModelYear +
-                                "\nDailyPrice: " + car.DailyPrice);
-                Console.WriteLine("-----------------------------------");
-            }
-            List<Car> byBrand = carManager.GetCarsyByBrandId(50);
+        }
+
+        private static void GetCarsByBrandIdTEST()
+        {
+            CarManager carManager2 = new CarManager(new EfCarDal());
+            List<Car> byBrand = carManager2.GetCarsyByBrandId(50);
             Console.WriteLine("****************");
             Console.WriteLine("****************");
             Console.WriteLine("****************");
@@ -51,12 +54,23 @@ namespace ConsoleUI
                                 "\nDailyPrice: " + car.DailyPrice);
                 Console.WriteLine("-----------------------------------");
             }
-
-
-            */
-
         }
 
+        private static void GetCarsByIdTEST()
+        {
+            CarManager carManager1 = new CarManager(new EfCarDal());
+
+            List<Car> byColor = carManager1.GetCarsByColorId(102);
+            foreach (Car car in byColor)
+            {
+                Console.WriteLine("Id: " + car.Id +
+                                "\nBrandId: " + car.BrandId +
+                                "\nColorId: " + car.ColorId +
+                                "\nModelYear: " + car.ModelYear +
+                                "\nDailyPrice: " + car.DailyPrice);
+                Console.WriteLine("-----------------------------------");
+            }
+        }
     }
 
 }
