@@ -2,9 +2,11 @@
 using DataAccess.Concrete.InEntityFramework;
 using DataAccess.Concrete.InMemory;
 using Entities.Concrete;
+using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.ConstrainedExecution;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -17,9 +19,21 @@ namespace ConsoleUI
             //GetAllCarsTEST();
             //GetCarsByIdTEST();
             //GetCarsByBrandIdTEST();
+            CarDetailDtoTEST();
 
+        }
 
-
+        private static void CarDetailDtoTEST()
+        {
+            CarManager carManager = new CarManager(new EfCarDal());
+            foreach (CarDetailDto carDetail in carManager.carDetailDtos())
+            {
+                Console.WriteLine("CarName: " + carDetail.CarName +
+                                  "\nBrandName: " + carDetail.BrandName +
+                                  "\nColorName: " + carDetail.ColorName +
+                                  "\nDailyPrice: " + carDetail.DailyPrice);
+                Console.WriteLine("-----------------------------------");
+            }
         }
 
         private static void GetAllCarsTEST()
