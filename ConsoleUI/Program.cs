@@ -21,7 +21,13 @@ namespace ConsoleUI
             //GetCarsByBrandIdTEST();
             //CarDetailDtoTEST();
             //BrandGetAllTEST();
-
+            ColorrManager colorrManager = new ColorrManager(new EfColorrDal());
+            colorrManager.AddColor(new Colorr() {ColorName = "Purple", Id = 107});    
+            foreach (var item in colorrManager.GetAllColors())
+            {
+                Console.WriteLine("ColorName: " + item.ColorName + " Color Id: " + item.Id);
+            }
+        
         }
 
         private static void BrandGetAllTEST()
