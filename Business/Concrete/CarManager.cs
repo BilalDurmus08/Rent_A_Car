@@ -25,7 +25,7 @@ namespace Business.Concrete
             {
                 if(item.Id == car.Id) 
                 {
-                    Console.WriteLine("Id Already exist. The Car couldn't Added");
+                    Console.WriteLine("It Already exist. The Car couldn't Added");
                     return;
                 }
             }

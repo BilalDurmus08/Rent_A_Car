@@ -19,8 +19,18 @@ namespace ConsoleUI
             //GetAllCarsTEST();
             //GetCarsByIdTEST();
             //GetCarsByBrandIdTEST();
-            CarDetailDtoTEST();
+            //CarDetailDtoTEST();
+            //BrandGetAllTEST();
 
+        }
+
+        private static void BrandGetAllTEST()
+        {
+            BrandManager brandManager = new BrandManager(new EfBrandDal());
+            foreach (var br in brandManager.GetAllBrands())
+            {
+                Console.WriteLine("Brand Name: " + br.BrandName + " Brand Id: " + br.Id);
+            }
         }
 
         private static void CarDetailDtoTEST()
