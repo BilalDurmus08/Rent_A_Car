@@ -1,5 +1,9 @@
 ﻿using Business.Abstract;
+using Business.Constants;
+using Core.Utilites.Results.Abstract;
+using Core.Utilites.Results.Concrete;
 using DataAccess.Abstract;
+using DataAccess.Concrete.InEntityFramework;
 using Entities.Concrete;
 using Entities.DTOs;
 using System;
@@ -19,45 +23,51 @@ namespace Business.Concrete
             _BrandDal = brandDal;
         }
 
-        public void AddBrand(Brand brand)
+        public IResult AddBrand(Brand brand)
         {
             foreach (Brand br in _BrandDal.GetAll())
             {
                 if (br.Id == brand.Id)
                 {
-                    Console.WriteLine("It Already exist. The Brand couldn't Added");
-                    return;
+                    return new ErrorResult(Messages.AddError);
                 }
             }
             _BrandDal.Add(brand);
+            return new SuccessResult(Messages.AddSuccess);
         }
 
-        public void DeleteBrand(Brand brand)
+        public IResult DeleteBrand(Brand brand)
         {
             foreach (var br in _BrandDal.GetAll())
             {
                 if (br.Id == brand.Id)
                 {
                     _BrandDal.Delete(brand);
-                    return;
+                    return new SuccessResult(Messages.DeleteSuccess);
                 }
             }
-            Console.WriteLine("The brand is not exist.");
+            return new ErrorResult(Messages.DeleteError);
         }
 
-        public List<Brand> GetAllBrands()
+        public IDataResult<List<Brand>> GetAllBrands()
         {
-            return _BrandDal.GetAll();
+            int nowHour = DateTime.Now.Hour;
+            if (nowHour <= 18 && nowHour > 8)
+            {
+                return new SuccessDataResult<List<Brand>>(_BrandDal.GetAll());
+            }
+            return new ErrorDataResult<List<Brand>>(Messages.MaintenanceTime);
         }
 
-        public Brand GetBrandById(int brandId)
+        public IDataResult<Brand> GetBrandById(int brandId)
         {
-            return _BrandDal.GetAll().SingleOrDefault(p => p.Id == brandId);
+            return new SuccessDataResult<Brand>(_BrandDal.GetAll().SingleOrDefault(p => p.Id == brandId));
         }
 
-        public void UpdateBrand(Brand brand)
+        public IResult UpdateBrand(Brand brand)
         {
             _BrandDal.Update(brand);
+            return new SuccessResult();
         }
 
      

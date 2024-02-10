@@ -1,4 +1,7 @@
 ﻿using Business.Abstract;
+using Business.Constants;
+using Core.Utilites.Results.Abstract;
+using Core.Utilites.Results.Concrete;
 using DataAccess.Abstract;
 using DataAccess.Concrete.InEntityFramework;
 using Entities.Concrete;
@@ -18,45 +21,51 @@ namespace Business.Concrete
             _colorrDal = colorrDal;
         }
 
-        public void AddColor(Colorr color)
+        public IResult AddColor(Colorr color)
         {
             foreach (Colorr clr in _colorrDal.GetAll())
             {
                 if (clr.Id == color.Id)
                 {
-                    Console.WriteLine("It Already exist. The Brand couldn't Added");
-                    return;
+                    return new ErrorResult(Messages.AddError);
                 }
             }
             _colorrDal.Add(color);
+            return new SuccessResult(Messages.AddSuccess);
         }
 
-        public void DeleteColor(Colorr color)
+        public IResult DeleteColor(Colorr color)
         {
             foreach (var clr in _colorrDal.GetAll())
             {
                 if (clr.Id == color.Id)
                 {
                     _colorrDal.Delete(color);
-                    return;
+                    return new SuccessResult(Messages.DeleteSuccess);
                 }
             }
-            Console.WriteLine("The Color is not exist.");
+            return new ErrorResult(Messages.DeleteError);
         }
 
-        public List<Colorr> GetAllColors()
+        public IDataResult<List<Colorr>> GetAllColors()
         {
-            return _colorrDal.GetAll();
+            int nowHour = DateTime.Now.Hour;
+            if (nowHour <= 18 && nowHour > 8)
+            {
+                return new SuccessDataResult<List<Colorr>>(_colorrDal.GetAll());
+            }
+            return new ErrorDataResult<List<Colorr>>(Messages.MaintenanceTime);
         }
 
-        public Colorr GetColorById(int id)
+        public IDataResult<Colorr> GetColorById(int id)
         {
-            return _colorrDal.GetAll().SingleOrDefault(cl => cl.Id == id);
+            return new SuccessDataResult<Colorr>(_colorrDal.GetAll().SingleOrDefault(cl => cl.Id == id));
         }
 
-        public void UpdateColor(Colorr color)
+        public IResult UpdateColor(Colorr color)
         {
             _colorrDal.Update(color);
+            return new SuccessResult();
         }
 
     }

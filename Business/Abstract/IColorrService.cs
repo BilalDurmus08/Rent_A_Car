@@ -1,4 +1,5 @@
-﻿using Entities.Concrete;
+﻿using Core.Utilites.Results.Abstract;
+using Entities.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,11 +10,11 @@ namespace Business.Abstract
 {
     public interface IColorrService
     {
-        void AddColor(Colorr color);
-        void UpdateColor(Colorr color);
-        void DeleteColor(Colorr color);
-        List<Colorr> GetAllColors();
-        Colorr GetColorById(int id);
+        IResult AddColor(Colorr color);
+        IResult UpdateColor(Colorr color);
+        IResult DeleteColor(Colorr color);
+        IDataResult<List<Colorr>> GetAllColors();
+        IDataResult<Colorr> GetColorById(int id);
     }
 
 }

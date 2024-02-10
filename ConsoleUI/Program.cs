@@ -21,13 +21,24 @@ namespace ConsoleUI
             //GetCarsByBrandIdTEST();
             //CarDetailDtoTEST();
             //BrandGetAllTEST();
+            //ColorTEST();
+            CarManager carManager = new CarManager(new EfCarDal());
+            var result = carManager.GetCarsyByBrandId(50);
+            foreach (var item in result.Data)
+            {
+                Console.WriteLine("BrandId: " + item.BrandId + " Name: " + item.CarName);
+            }
+
+        }
+
+        private static void ColorTEST()
+        {
             ColorrManager colorrManager = new ColorrManager(new EfColorrDal());
-            colorrManager.AddColor(new Colorr() {ColorName = "Purple", Id = 107});    
+            colorrManager.AddColor(new Colorr() { ColorName = "Purple", Id = 107 });
             foreach (var item in colorrManager.GetAllColors())
             {
                 Console.WriteLine("ColorName: " + item.ColorName + " Color Id: " + item.Id);
             }
-        
         }
 
         private static void BrandGetAllTEST()
@@ -42,7 +53,8 @@ namespace ConsoleUI
         private static void CarDetailDtoTEST()
         {
             CarManager carManager = new CarManager(new EfCarDal());
-            foreach (CarDetailDto carDetail in carManager.carDetailDtos())
+            var result = carManager.carDetailDtos();
+            foreach (CarDetailDto carDetail in result.Data)
             {
                 Console.WriteLine("CarName: " + carDetail.CarName +
                                   "\nBrandName: " + carDetail.BrandName +
@@ -55,27 +67,34 @@ namespace ConsoleUI
         private static void GetAllCarsTEST()
         {
             CarManager carManager = new CarManager(new EfCarDal());
-
-            foreach (Car car in carManager.GetAll())
+            var result = carManager.GetAll();
+            if(result.Success == true)
             {
-                Console.WriteLine("Id: " + car.Id +
-                                  "\nBrandId: " + car.BrandId +
-                                  "\nColorId: " + car.ColorId +
-                                  "\nModelYear: " + car.ModelYear +
-                                  "\nDailyPrice: " + car.DailyPrice +
-                                  "\nCarName: " + car.CarName);
-                Console.WriteLine("-----------------------------------");
+                foreach (Car car in result.Data)
+                {
+                    Console.WriteLine("Id: " + car.Id +
+                                      "\nBrandId: " + car.BrandId +
+                                      "\nColorId: " + car.ColorId +
+                                      "\nModelYear: " + car.ModelYear +
+                                      "\nDailyPrice: " + car.DailyPrice +
+                                      "\nCarName: " + car.CarName);
+                    Console.WriteLine("-----------------------------------");
+                }
             }
+            else
+            {
+                Console.WriteLine(result.Message);
+            }
+
+            
         }
 
         private static void GetCarsByBrandIdTEST()
         {
             CarManager carManager2 = new CarManager(new EfCarDal());
-            List<Car> byBrand = carManager2.GetCarsyByBrandId(50);
-            Console.WriteLine("****************");
-            Console.WriteLine("****************");
-            Console.WriteLine("****************");
-            foreach (Car car in byBrand)
+            var result = carManager2.GetCarsyByBrandId(50);
+            
+            foreach (Car car in result.Data)
             {
                 Console.WriteLine("Id: " + car.Id +
                                 "\nBrandId: " + car.BrandId +
@@ -89,9 +108,9 @@ namespace ConsoleUI
         private static void GetCarsByIdTEST()
         {
             CarManager carManager1 = new CarManager(new EfCarDal());
-
-            List<Car> byColor = carManager1.GetCarsByColorId(102);
-            foreach (Car car in byColor)
+            var result = carManager1.GetCarsByColorId(102);
+            
+            foreach (Car car in result.Data)
             {
                 Console.WriteLine("Id: " + car.Id +
                                 "\nBrandId: " + car.BrandId +
