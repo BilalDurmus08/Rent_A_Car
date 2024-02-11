@@ -27,10 +27,13 @@ namespace Business.Concrete
         {
             foreach (Brand br in _BrandDal.GetAll())
             {
+
+
                 if (br.Id == brand.Id)
                 {
                     return new ErrorResult(Messages.AddError);
                 }
+            
             }
             _BrandDal.Add(brand);
             return new SuccessResult(Messages.AddSuccess);
