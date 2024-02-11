@@ -22,20 +22,78 @@ namespace ConsoleUI
             //CarDetailDtoTEST();
             //BrandGetAllTEST();
             //ColorTEST();
+            //GetCarsByBrandIDTEST();
+            //AddRentalTEST();
+            RentalManager rentalManager = new RentalManager(new EfRentalDal());
+            var result = rentalManager.CarDeliver(3, DateTime.Now);
+            if (result.Success == true)
+            {
+                Console.WriteLine(result.Message);
+            }
+            else
+            {
+                Console.WriteLine(result.Message);
+            }
+
+            GetAllRentalTEST();
+
+        }
+
+        private static void AddRentalTEST()
+        {
+            RentalManager rentalManager = new RentalManager(new EfRentalDal());
+            var result = rentalManager.AddRental(new Rental()
+            {
+                Id = 3,
+                CarId = 3,
+                CustomerId = 4,
+                RentDate = new DateTime(2023, 3, 25),
+
+            });
+
+            if (result.Success == false)
+            {
+                Console.WriteLine(result.Message);
+            }
+        }
+
+        private static void GetAllRentalTEST()
+        {
+            RentalManager rentalManager1 = new RentalManager(new EfRentalDal());
+            var result = rentalManager1.GetAllRental();
+            if (result.Success == true)
+            {
+                foreach (var item in result.Data)
+                {
+                    Console.WriteLine("Id: " + item.Id +
+                                      "\nCarId: " + item.CarId +
+                                      "\nCustomerId: " + item.CustomerId +
+                                      "\nRentDate: " + item.RentDate +
+                                      "\nReturnDate: " + item.ReturnDate);
+                    Console.WriteLine("---------------------");
+                }
+            }
+            else
+            {
+                Console.WriteLine("while getall method working the system encountered an error");
+            }
+        }
+
+        private static void GetCarsByBrandIDTEST()
+        {
             CarManager carManager = new CarManager(new EfCarDal());
             var result = carManager.GetCarsyByBrandId(50);
             foreach (var item in result.Data)
             {
                 Console.WriteLine("BrandId: " + item.BrandId + " Name: " + item.CarName);
             }
-
         }
 
         private static void ColorTEST()
         {
             ColorrManager colorrManager = new ColorrManager(new EfColorrDal());
             colorrManager.AddColor(new Colorr() { ColorName = "Purple", Id = 107 });
-            foreach (var item in colorrManager.GetAllColors())
+            foreach (var item in colorrManager.GetAllColors().Data)
             {
                 Console.WriteLine("ColorName: " + item.ColorName + " Color Id: " + item.Id);
             }
@@ -44,7 +102,7 @@ namespace ConsoleUI
         private static void BrandGetAllTEST()
         {
             BrandManager brandManager = new BrandManager(new EfBrandDal());
-            foreach (var br in brandManager.GetAllBrands())
+            foreach (var br in brandManager.GetAllBrands().Data)
             {
                 Console.WriteLine("Brand Name: " + br.BrandName + " Brand Id: " + br.Id);
             }
