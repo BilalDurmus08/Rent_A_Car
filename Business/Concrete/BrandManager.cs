@@ -39,12 +39,13 @@ namespace Business.Concrete
             return new SuccessResult(Messages.AddSuccess);
         }
 
-        public IResult DeleteBrand(Brand brand)
+        public IResult DeleteBrand(int id)
         {
             foreach (var br in _BrandDal.GetAll())
             {
-                if (br.Id == brand.Id)
+                if (br.Id == id)
                 {
+                    Brand brand = _BrandDal.Get(p => p.Id == id);
                     _BrandDal.Delete(brand);
                     return new SuccessResult(Messages.DeleteSuccess);
                 }
@@ -57,20 +58,28 @@ namespace Business.Concrete
             int nowHour = DateTime.Now.Hour;
             if (nowHour <= 18 && nowHour > 8)
             {
-                return new SuccessDataResult<List<Brand>>(_BrandDal.GetAll());
+                return new SuccessDataResult<List<Brand>>(_BrandDal.GetAll(), Messages.GetSuccess);
             }
             return new ErrorDataResult<List<Brand>>(Messages.MaintenanceTime);
         }
 
         public IDataResult<Brand> GetBrandById(int brandId)
         {
-            return new SuccessDataResult<Brand>(_BrandDal.GetAll().SingleOrDefault(p => p.Id == brandId));
+            foreach (var item in _BrandDal.GetAll())
+            {
+                if (item.Id == brandId)
+                {
+                    return new SuccessDataResult<Brand>(_BrandDal.GetAll().SingleOrDefault(p => p.Id == brandId), Messages.GetSuccess);
+
+                }
+            }
+            return new ErrorDataResult<Brand>(Messages.IsNull);
         }
 
         public IResult UpdateBrand(Brand brand)
         {
             _BrandDal.Update(brand);
-            return new SuccessResult();
+            return new SuccessResult(Messages.UpdateSuccess);
         }
 
      

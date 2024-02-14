@@ -58,7 +58,7 @@ namespace Business.Concrete
             int nowHour= DateTime.Now.Hour;
             if(nowHour <= 18 && nowHour > 8)
             {
-                return new SuccessDataResult<List<Car>>(_CarDal.GetAll());
+                return new SuccessDataResult<List<Car>>(_CarDal.GetAll(),Messages.GetSuccess);
             }
             return new ErrorDataResult<List<Car>>(Messages.MaintenanceTime);
         }

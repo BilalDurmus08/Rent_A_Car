@@ -15,32 +15,57 @@ namespace Business.Concrete
 {
     public class RentalManager : IRentalService
     {
-        IRentalDal _RentalDal;
+        IRentalDal _rentalDal;
         public RentalManager(IRentalDal rentalDal)
         {
-            _RentalDal = rentalDal;
+            _rentalDal = rentalDal;
         }
         public IResult AddRental(Rental rental)
         {
-            foreach (var item in _RentalDal.GetAll())
+            foreach (Rental rnt in _rentalDal.GetAll())
             {
-               
-                if ((item.Id == rental.Id) || (item.ReturnDate == null && item.CarId == rental.CarId))
+                if (rnt.Id == rental.Id)
                 {
                     return new ErrorResult(Messages.AddError);
                 }
-           
             }
-
-            _RentalDal.Add(rental);
+            _rentalDal.Add(rental);
             return new SuccessResult(Messages.AddSuccess);
         }
 
-        public IDataResult<List<Rental>> GetAllRental()
+        public IResult DeleteRental(Rental rental)
         {
-            return new SuccessDataResult<List<Rental>>(_RentalDal.GetAll());
+            foreach (var rnt in _rentalDal.GetAll())
+            {
+                if (rnt.Id == rental.Id)
+                {
+                    _rentalDal.Delete(rental);
+                    return new SuccessResult(Messages.DeleteSuccess);
+                }
+            }
+            return new ErrorResult(Messages.DeleteError);
         }
 
+        public IDataResult<List<Rental>> GetAllRentals()
+        {
+            int nowHour = DateTime.Now.Hour;
+            if (nowHour <= 18 && nowHour > 8)
+            {
+                return new SuccessDataResult<List<Rental>>(_rentalDal.GetAll());
+            }
+            return new ErrorDataResult<List<Rental>>(Messages.MaintenanceTime);
+        }
+
+        public IDataResult<Rental> GetRentalById(int id)
+        {
+            return new SuccessDataResult<Rental>(_rentalDal.GetAll().SingleOrDefault(rnt => rnt.Id == id));
+        }
+
+        public IResult UpdateRental(Rental rental)
+        {
+            _rentalDal.Update(rental);
+            return new SuccessResult();
+        }
         public IResult CarDeliver(int id, DateTime deliverTime)
         {
             using (Rent_A_CarContext context = new Rent_A_CarContext())
