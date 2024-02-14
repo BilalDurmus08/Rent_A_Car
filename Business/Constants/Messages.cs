@@ -18,6 +18,8 @@ namespace Business.Constants
         public static string UpdateError = "The object couldn't Update.";
         public static string UpdateSuccess = "The Object Updated successfully";
         public static string ReturnCar = "The car has been returned";
+        internal static string GetSuccess = "The object was successfully retrieved";
+        
     }
 
 }
